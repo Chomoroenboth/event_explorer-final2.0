@@ -1,0 +1,59 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: event_explorer
+        restart: unless-stopped
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+            - ./vendor:/var/www/vendor
+        ports:
+            - "8000:8000"
+        networks:
+            - laravel
+        depends_on:
+            - mysql
+        environment:
+            - APP_ENV=local
+            - APP_DEBUG=true
+            - DB_CONNECTION=mysql
+            - DB_HOST=mysql
+            - DB_PORT=3306
+            - DB_DATABASE=event_explorer
+            - DB_USERNAME=root
+            - DB_PASSWORD=root
+        command: php artisan serve --host=0.0.0.0 --port=8000
+
+    mysql:
+        image: mysql:8.0
+        container_name: event_explorer-2.0.sql
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: event_explorer
+        ports:
+            - "3306:3306"
+        volumes:
+            - mysql_data:/var/lib/mysql
+        networks:
+            - laravel
+
+    node:
+        image: node:20
+        container_name: event_explorer_node
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+            - ./node_modules:/var/www/node_modules
+        command: sh -c "npm install && npm run dev"
+        networks:
+            - laravel
+
+volumes:
+    mysql_data:
+
+networks:
+    laravel:
+        driver: bridge
