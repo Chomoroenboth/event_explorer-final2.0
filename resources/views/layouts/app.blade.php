@@ -28,7 +28,7 @@
 <body class="bg-black text-white min-h-screen">
     <header class="bg-black px-6 py-4 flex items-center justify-between sticky top-0 z-50">
         <a class="flex items-center" href="{{ url('/') }}">
-            <h1 class="text-3xl font-bold text-white tracking-tight">Event<br>Explorer</h1>
+            <h1 class="text-3x  l font-bold text-white tracking-tight">Event<br>Explorer</h1>
         </a>
         <div class="flex items-center space-x-4">
             <!-- Propose Event Button -->

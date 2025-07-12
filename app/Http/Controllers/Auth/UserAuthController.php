@@ -20,7 +20,7 @@ class UserAuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required',
+            'password' => 'required|min:6|confirmed',
         ]);
 
         $user = User::create([
@@ -30,9 +30,7 @@ class UserAuthController extends Controller
         ]);
 
         Auth::login($user);
-        return response()->json([
-            'User' => $user
-        ]);
+        return redirect('/');
     }
 
     public function showLogin()

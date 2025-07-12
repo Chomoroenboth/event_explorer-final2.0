@@ -7,12 +7,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\UserAuthController;
 use App\Http\Controllers\Auth\AdminAuthController;
 
-
+//home page route(frontEnd)
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/events/propose', [EventRequestController::class, 'proposeEvent'])->name('events.propose');
 Route::post('/events/propose', [EventRequestController::class, 'storeProposedEvent'])->name('events.propose');
 
-// User Auth
+// User Auth(frontEnd)
 Route::get('/register', [UserAuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [UserAuthController::class, 'register']);
 Route::get('/login', [UserAuthController::class, 'showLogin'])->name('login');
@@ -32,8 +32,11 @@ Route::get('/test', function () {
 Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     // Dashboard and Event Request Management
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/dashboard/events/requests/{id}/edit', [AdminController::class, 'editProposeEvent'])->name('admin.dashboard.events.requests.edit');
+    //Shows form to edit a proposed event
+    Route::get('/dashboard/events/requests/{id}/edit', [AdminController::class, 'editProposeEvent'])->name('admin.dashboard.events.requests.edit'); 
+    //Saves changes to the proposed event
     Route::put('/dashboard/events/requests/{id}/edit', [EventRequestController::class, 'updateProposedEvent'])->name('admin.dashboard.events.requests.edit');
+    
     Route::patch('/dashboard/events/requests/{id}/approve', [EventRequestController::class, 'approve'])->name('admin.dashboard.events.requests.approve');
     Route::patch('/dashboard/events/requests/{id}/reject', [EventRequestController::class, 'reject'])->name('admin.dashboard.events.requests.reject');
     

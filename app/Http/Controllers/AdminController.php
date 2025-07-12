@@ -32,7 +32,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function editProposeEvent(Request $request)
+    public function  editProposeEvent(Request $request)
     {
         try {
             $eventRequestId = $request->route('id');
